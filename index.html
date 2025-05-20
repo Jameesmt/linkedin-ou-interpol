@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>LinkedIn ou Interpol ?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    img {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #333;
+    }
+    button {
+      font-size: 18px;
+      padding: 10px 30px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    .result, .score {
+      margin-top: 30px;
+      font-size: 20px;
+    }
+    .source-link {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>LinkedIn ou Interpol ?</h1>
+  <p>Devine si cette personne vient d’un profil LinkedIn ou d’une notice rouge Interpol.</p>
+  <div class="score" id="score">Score : 0</div>
+  <img id="profile-pic" src="" alt="Profil mystère">
+
+  <div>
+    <button onclick="showResult('linkedin')">LinkedIn</button>
+    <button onclick="showResult('interpol')">Interpol</button>
+  </div>
+
+  <div class="result" id="result"></div>
+  <div class="source-link" id="source-link"></div>
+
+  <script>
+    const profiles = [
+      {
+        name: "Jean Dupont",
+        image: "https://randomuser.me/api/portraits/men/75.jpg",
+        source: "interpol",
+        url: "https://www.interpol.int/en/How-we-work/Notices/View-Red-Notices"
+      },
+      {
+        name: "Claire Moreau",
+        image: "https://randomuser.me/api/portraits/women/65.jpg",
+        source: "linkedin",
+        url: "https://www.linkedin.com/in/fakeprofile"
+      },
+      {
+        name: "Omar El Hadj",
+        image: "https://randomuser.me/api/portraits/men/44.jpg",
+        source: "interpol",
+        url: "https://www.interpol.int/en/How-we-work/Notices/View-Red-Notices"
+      },
+      {
+        name: "Sophie Bernard",
+        image: "https://randomuser.me/api/portraits/women/12.jpg",
+        source: "linkedin",
+        url: "https://www.linkedin.com/in/fakeprofile2"
+      }
+    ];
+
+    let score = 0;
+    let selected;
+
+    function newRound() {
+      selected = profiles[Math.floor(Math.random() * profiles.length)];
+      document.getElementById("profile-pic").src = selected.image;
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("source-link").innerHTML = "";
+    }
+
+    function showResult(choice) {
+      const correctAnswer = selected.source;
+      const sourceUrl = selected.url;
+      const name = selected.name;
+
+      let resultText = "";
+      if (choice === correctAnswer) {
+        score++;
+        resultText = "Bonne réponse ! Il s'agit de " + name + ".";
+      } else {
+        score = 0;
+        resultText = "Mauvaise réponse. Il s'agissait de " + name + ".";
+      }
+
+      document.getElementById("score").innerHTML = "Score : " + score;
+      document.getElementById("result").innerHTML = resultText;
+      document.getElementById("source-link").innerHTML =
+        `<a href="${sourceUrl}" target="_blank">Voir le profil sur ${correctAnswer === 'linkedin' ? 'LinkedIn' : 'Interpol'}</a>`;
+
+      setTimeout(newRound, 2000);
+    }
+
+    // Initial setup
+    window.onload = newRound;
+  </script>
+</body>
+</html>
