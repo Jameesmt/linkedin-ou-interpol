@@ -42,6 +42,7 @@
   <div>
     <button onclick="showResult('linkedin')">LinkedIn</button>
     <button onclick="showResult('interpol')">Interpol</button>
+    <button id="next-btn" onclick="newRound()" style="display:none; margin-top: 20px;">Suivant</button>
   </div>
 
   <div class="result" id="result"></div>
@@ -138,6 +139,7 @@
       document.getElementById("profile-pic").src = selected.image;
       document.getElementById("result").innerHTML = "";
       document.getElementById("source-link").innerHTML = "";
+      document.getElementById("next-btn").style.display = "none";
     }
 
     function showResult(choice) {
@@ -159,7 +161,7 @@
       document.getElementById("source-link").innerHTML =
         `<a href="${sourceUrl}" target="_blank">Voir le profil sur ${correctAnswer === 'linkedin' ? 'LinkedIn' : 'Interpol'}</a>`;
 
-      setTimeout(newRound, 20000);
+      document.getElementById("next-btn").style.display = "inline-block";
     }
 
     // Initial setup
